@@ -1,13 +1,21 @@
 {
   "name": "rn-decimal-input",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "build": "tsc"
   },
-  "keywords": ["react-native", "input", "decimal", "formatted", "currency"],
+  "keywords": [
+    "react-native",
+    "input",
+    "decimal",
+    "formatted",
+    "currency"
+  ],
   "author": "Your Name",
   "license": "MIT",
   "peerDependencies": {
