@@ -107,28 +107,6 @@ Say goodbye to messy formatting and inconsistent user input! This is perfect for
 
 ---
 
-## 🛠 Dev Setup
-
-```bash
-git clone https://github.com/meetmuaz/rn-decimal-input.git
-cd rn-decimal-input
-npm install
-```
-
-To build:
-
-```bash
-npm run build
-```
-
-To publish:
-
-```bash
-npm publish --access public
-```
-
----
-
 ## 🧑‍💻 Author
 
 Made with ❤️ by [@meetmuaz](https://github.com/meetmuaz)
