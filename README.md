@@ -41,7 +41,7 @@ yarn add rn-decimal-input
 ```tsx
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
-import FormattedDecimalInput from 'rn-decimal-input';
+import { FormattedDecimalInput } from 'rn-decimal-input';
 
 export default function App() {
   const [value, setValue] = React.useState('');
@@ -79,7 +79,7 @@ const styles = StyleSheet.create({
 ```tsx
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
-import FormattedDecimalInput from 'rn-decimal-input';
+import { FormattedDecimalInput } from 'rn-decimal-input';
 
 export default function App() {
   const [value, setValue] = React.useState('');
