@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import {
   TextInput,
   TextInputProps,
-  StyleSheet,
   TextStyle,
 } from 'react-native';
 
@@ -10,41 +9,48 @@ type Props = TextInputProps & {
   value: string;
   onChangeText: (value: string) => void;
   style?: TextStyle | TextStyle[];
+  currency?: string; // Optional currency prop
 };
 
-const formatNumber = (text: string): string => {
+const formatNumber = (text: string, currency?: string): string => {
   const clean = text.replace(/[^0-9.]/g, '');
   const floatVal = parseFloat(clean);
-  if (isNaN(floatVal)) return '0.00';
-  return floatVal.toLocaleString('en-US', {
+  
+  if (isNaN(floatVal)) return currency ? `${currency}0.00` : '0.00';
+  
+  const formatted = floatVal.toLocaleString('en-US', {
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,
   });
+  
+  return currency ? `${currency}${formatted}` : formatted;
 };
 
 export const FormattedDecimalInput: React.FC<Props> = ({
   value,
   onChangeText,
   style,
+  currency,
   ...rest
 }) => {
-  const [internalValue, setInternalValue] = useState(formatNumber(value));
+  const [internalValue, setInternalValue] = useState(formatNumber(value, currency));
 
   useEffect(() => {
-    setInternalValue(formatNumber(value));
-  }, [value]);
+    setInternalValue(formatNumber(value, currency));
+  }, [value, currency]);
 
   const handleChange = (text: string) => {
-    const clean = text.replace(/[^0-9.]/g, '');
-    const floatVal = parseFloat(clean);
+    // Remove currency symbol and non-numeric characters for parsing
+    const cleanText = text.replace(currency || '', '').replace(/[^0-9.]/g, '');
+    const floatVal = parseFloat(cleanText);
+    
+    // Format with or without currency symbol
     const formatted = isNaN(floatVal)
-      ? ''
-      : floatVal.toLocaleString('en-US', {
-          minimumFractionDigits: 2,
-          maximumFractionDigits: 2,
-        });
+      ? currency ? `${currency}` : ''
+      : formatNumber(cleanText, currency);
+    
     setInternalValue(formatted);
-    onChangeText(clean); // send raw value
+    onChangeText(cleanText); // send raw value without currency and formatting
   };
 
   return (
@@ -52,18 +58,8 @@ export const FormattedDecimalInput: React.FC<Props> = ({
       value={internalValue}
       onChangeText={handleChange}
       keyboardType="numeric"
-      style={[styles.input, style]} // merge default + user styles
+      style={style}
       {...rest}
     />
   );
 };
-
-const styles = StyleSheet.create({
-  input: {
-    padding: 10,
-    borderColor: '#ccc',
-    borderWidth: 1,
-    borderRadius: 8,
-    fontSize: 16,
-  },
-});

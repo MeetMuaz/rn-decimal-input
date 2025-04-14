@@ -1,6 +1,6 @@
 # 🧮 rn-decimal-input
 
-**React Native Custom Input** for consistent decimal formatting — adds `,` (comma) even when entering whole numbers! 🎯
+**React Native Custom Input** for consistent decimal formatting — adds `,` (comma) even when entering whole numbers! Now with optional currency symbols! 🎯
 
 ![npm](https://img.shields.io/npm/v/rn-decimal-input?color=green&style=flat-square)
 ![npm](https://img.shields.io/npm/dw/rn-decimal-input?style=flat-square)
@@ -12,6 +12,7 @@
 ## ✨ Features
 
 - ✅ Comma formatting for all numbers (even whole numbers!)
+- 💲 Optional currency symbol support ($, €, £, etc.)
 - 🧠 Automatically handles input formatting
 - 🎨 Fully styleable with `TextInput` props
 - 💪 TypeScript support
@@ -34,6 +35,8 @@ yarn add rn-decimal-input
 ---
 
 ## 🧱 Usage
+
+### Basic Usage
 
 ```tsx
 import React from 'react';
@@ -71,29 +74,55 @@ const styles = StyleSheet.create({
 });
 ```
 
+### With Currency Symbol
+
+```tsx
+import React from 'react';
+import { View, StyleSheet } from 'react-native';
+import FormattedDecimalInput from 'rn-decimal-input';
+
+export default function App() {
+  const [value, setValue] = React.useState('');
+
+  return (
+    <View style={styles.container}>
+      <FormattedDecimalInput
+        value={value}
+        onChangeText={setValue}
+        placeholder="Enter amount"
+        style={styles.input}
+        keyboardType="numeric"
+        currency="$"  // Add currency symbol prefix
+      />
+    </View>
+  );
+}
+```
+
 ---
 
 ## ⚙️ Props
 
 This component accepts all native `TextInput` props 📥. Below are some key ones:
 
-| Prop           | Type     | Description                                 |
-|----------------|----------|---------------------------------------------|
-| `value`        | string   | The current input value                     |
-| `onChangeText` | function | Callback when text changes (formatted)      |
-| `style`        | object   | Styles to apply to the input                |
-| `...TextInputProps` | any | All other native TextInput props supported |
+| Prop           | Type     | Description                                 | Required |
+|----------------|----------|---------------------------------------------|----------|
+| `value`        | string   | The current input value                     | Yes      |
+| `onChangeText` | function | Callback when text changes (formatted)      | Yes      |
+| `style`        | object   | Styles to apply to the input                | No       |
+| `currency`     | string   | Currency symbol to display before the value | No       |
+| `...TextInputProps` | any | All other native TextInput props supported | No       |
 
 ---
 
 ## 🧪 Output Examples
 
-| Input | Displayed |
-|-------|-----------|
-| `1`   | `1`       |
-| `100` | `100`     |
-| `1000`| `1,000`   |
-| `1000000.50` | `1,000,000.50` |
+| Input | Displayed (No Currency) | Displayed (With `currency="$"`) |
+|-------|-------------------------|--------------------------------|
+| `1`   | `1`                     | `$1`                           |
+| `100` | `100`                   | `$100`                         |
+| `1000`| `1,000`                 | `$1,000`                       |
+| `1000000.50` | `1,000,000.50`   | `$1,000,000.50`                |
 
 ---
 
@@ -103,6 +132,7 @@ Say goodbye to messy formatting and inconsistent user input! This is perfect for
 
 - 💰 Price fields
 - 📈 Financial data
+- 💲 Currency inputs
 - 🔢 Any decimal number entry
 
 ---
